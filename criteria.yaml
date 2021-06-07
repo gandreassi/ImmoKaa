@@ -1,0 +1,8 @@
+cities : [Aarau]#[Lausanne, Nyon, Morges, Rolle, Gland, Allaman, Coppet, Aubonne, Geneve, Versoix] #must be a list
+mode : buy #buy or rent
+#min_price : 10g #g=1e4 CHF, f=1e5CHF, m=1e6 CHF
+max_price : 10m
+radius : 5 #km
+min_rooms : 4.5
+max_rooms : 8
+days_old : 30 #max age of the posting
