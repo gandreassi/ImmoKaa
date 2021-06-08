@@ -5,9 +5,9 @@ from random import choice
 import pandas as pd
 import copy, time, sys, shutil, os, yaml, json
 import datetime as dt
+from glob import glob
 
-
-class ImmoKaa():
+class scraper():
     
     criteria = None
     df = None
@@ -163,9 +163,12 @@ class ImmoKaa():
         
         
     def get_preexisting_data(self):
+        pres = []
         try:
-            self.df_pre = pd.read_csv(self.__base_dir+"/serach_results_*.csv")
-            print ("Found pre-existing data. You can access the full dataset using get_full_dataset().")
+            for f in glob(self.__base_dir+"/serach_results_*.csv"):
+                pres.append(pd.read_csv(f))
+            self.df_pre = pd.concat(pres)
+            print ("Found {0} pre-existing data file(s). You can access the full dataset using get_full_dataset().". format(len(pres)))
         except FileNotFoundError:
             pass        
         
