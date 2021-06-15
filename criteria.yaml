@@ -1,4 +1,4 @@
-cities : [Aarau]#[Lausanne, Nyon, Morges, Rolle, Gland, Allaman, Coppet, Aubonne, Geneve, Versoix] #must be a list
+cities : [Lausanne, Nyon, Morges, Rolle, Gland, Allaman, Coppet, Aubonne, Geneve, Versoix] #must be a list
 mode : buy #buy or rent
 #min_price : 10g #g=1e4 CHF, f=1e5CHF, m=1e6 CHF
 max_price : 10m

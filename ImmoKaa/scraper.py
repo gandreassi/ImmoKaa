@@ -167,6 +167,8 @@ class scraper():
         try:
             for f in glob(self.__base_dir+"/serach_results_*.csv"):
                 pres.append(pd.read_csv(f))
+                pres[-1]["fetch-date"] = pd.to_datetime(pres[-1]['fetch-date'],\
+                                                            format="%Y-%m-%d").dt.date
             self.df_pre = pd.concat(pres)
             print ("Found {0} pre-existing data file(s). You can access the full dataset using get_full_dataset().". format(len(pres)))
         except FileNotFoundError:
