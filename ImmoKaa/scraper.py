@@ -76,8 +76,9 @@ class scraper():
         try:
             soup = BeautifulSoup(self._urlquery(url, verbose), 'html.parser')
             scripts = soup.findAll('script')
-            sr = next(script for script in scripts if 'searchResult' in script.string)
-            s = sr.string.replace(":undefined", ':"undefined"').lstrip("__INITIAL_STATE__=")
+            scripts = filter(None, [script.string for script in scripts])
+            sr = next(script for script in scripts if 'searchResult' in script)
+            s = sr.replace(":undefined", ':"undefined"').lstrip("__INITIAL_STATE__=")
             js = json.loads(s)
             return js
 
