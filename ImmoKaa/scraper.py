@@ -6,6 +6,7 @@ import pandas as pd
 import copy, time, sys, shutil, os, yaml, json
 import datetime as dt
 from glob import glob
+import regex
 
 class scraper():
     
@@ -78,10 +79,21 @@ class scraper():
             scripts = soup.findAll('script')
             scripts = filter(None, [script.string for script in scripts])
             sr = next(script for script in scripts if 'searchResult' in script)
+            #Come cleaning... with not-so-clean code. Because ImmoScout keeps changing stuff and I can't be bothered to fix this properly every time.
             s = sr.replace(":undefined", ':"undefined"').lstrip("__INITIAL_STATE__=")
-            js = json.loads(s)
+            s = regex.sub('\{"render".*?(?:\{(?:(?R)|[^{}])*})\}', '""', s)
+            poss = [m.start() for m in regex.finditer('e=>', s)]
+            res = s[:poss[0]]
+            for i in range(len(poss)):
+                end = len(s)
+                if i+1 < len(poss):
+                    end = poss[i+1]
+                dd = regex.sub('(?:\{(?:(?R)|[^{}])*})', '""', s[poss[i]+3:end], 1)
+                res += dd
+            
+            js = json.loads(res)
             return js
-
+        
         except Exception as e:
             if verbose: print("Error in immoscout24 parser: %s" % e)
             return None
